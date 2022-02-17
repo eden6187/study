@@ -2,13 +2,10 @@
 
 ## Architecture
 
-Cluster : Node들로 구성
-
-Node : 하나의 Elasticsearch server
-
-Index : Document를 저장
-
-Document : Index에 저장되는 데이터
+- Cluster : Node들로 구성
+- Node : 하나의 Elasticsearch server
+- Index : Document를 저장
+- Document : Index에 저장되는 데이터
 
 ![architecture](https://media.vlpt.us/images/jwpark06/post/da9ebf2d-a3d2-4f30-ae66-7a0ed85fc168/image.png)
 
@@ -155,10 +152,8 @@ flatten object
 - defalut로 활성화 되어 있지만, 안정적인 type만 받기를 원한다면, disable 하는 것도 방법이다. 
 
 ## Array Data Type in Elastic Search
-
 - Elasticsearch에는 array가 존재하지 않는다.
 대신, 입력받은 값들을 concatination해서 저장한다.
-
 - array 내부에 있는 object들을 독립적으로 다루고자 한다면, nested type을 사용하자!
 
 ## Date Type
@@ -214,24 +209,26 @@ unix timestamp와 혼용해서 사용하지 않도록 주의해야한다.
 
 ### Stemming
 
-reduces word to root form 
-ex) loved -> love / drinking -> drink
-Snowball token filter
+- reduces word to root form 
+- ex) loved -> love / drinking -> drink
+- Snowball token filter
 
 ### Stop words
 
-text 분석 과정에서 의미 없는 단어들을 날리는 것
-해당 단어들은 releveance scoring에 별다른 효과가 없다.
+- text 분석 과정에서 의미 없는 단어들을 날리는 것
+- 해당 단어들은 releveance scoring에 별다른 효과가 없다.
 
 ## Analyzers and search queries
 
-Analyzing time, Search time에는 같은 analyzer가 쓰여야 한다.
+- Analyzing time, Search time에는 같은 analyzer가 쓰여야 한다.
 
-따라서, Analyzing time과 Search time에 사용되는 analyzer를 커스터마이징 할 때는 주의를 기울여야 한다.
+- 따라서, Analyzing time과 Search time에 사용되는 analyzer를 커스터마이징 할 때는 주의를 기울여야 한다.
 
 # Search
 
-Query DSL로 search 가능
+- Getting Deeper : [Search in Depth](https://www.elastic.co/guide/en/elasticsearch/guide/current/search-in-depth.html)
+
+- Query DSL로 search 가능
 
 ## Search 과정
 - coordinating node가 request를 받는다.
@@ -259,49 +256,41 @@ Field-length norm
 -> Explain API
 
 ## Query Context vs Filter Context
-
-Filter Context -> Filtering dates, satus, ranges, etc / relavance scoring을 사용하지 않는다.
-
-Query Conetext -> Relavance score를 사용한다.
+- Filter Context -> Filtering dates, satus, ranges, etc / relavance scoring을 사용하지 않는다.
+- Query Conetext -> Relavance score를 사용한다.
 
 ## Full text queries vs Term level queries
+- Term level quereis -> exact match ( 따라서, full-text search에서는 사용해서는 안된다. )
+- Full text queries -> search query가 analyzing 된다. ( 해당 field에 define된 analyzer를 사용해서 )
 
-Term level quereis -> exact match ( 따라서, full-text search에서는 사용해서는 안된다. )
-
-Full text queries -> search query가 analyzing 된다. ( 해당 field에 define된 analyzer를 사용해서 )
+## [Boolquery](https://medium.com/elasticsearch/introduction-to-elasticsearch-queries-b5ea254bf455)
+query를 **조합**해서 사용
+- must
+- must_not
+- [should](https://esbook.kimjmin.net/05-search/5.4-keyword) 
+- filter
 
 # Improving Search Result
 
 ## Proximity Search and Slop
 
 - match_phrase -> 엄격한 검색
-
 - match_phrase에서는 term들의 순서가 맞아야지 검색 대상에 포함된다.
-
 - 이러한 제약조건을 완화해서 검색하는 것이 proximity search
-
 - proximity search를 위해서 ES에서는 slop paramter를 제공한다.
-
 - [slop](https://kb.objectrocket.com/elasticsearch/how-to-use-slop-with-phrase-search-in-elasticsearch-6)에는 integer 값을 주고 그 값은 최대 편집 거리를 의미한다.
 
 - [관련예제](https://marcobonzanini.com/2015/02/09/phrase-match-and-proximity-search-in-elasticsearch/)
 
 ## Fuzzy match query
-
 - [fuzziness/levenstein distance(편집 거리)](https://en.wikipedia.org/wiki/Levenshtein_distance)
-
 - fuzzy query : term level query (analyzing x)
 
 ## Synonym
-
 - Synonym token filter를 적용할 때 순서를 주의!!
-
 - Lowercase token filter보다 앞에 적용시키면, 대문자로 시작하는 term들이 synonym으로 치환이 제대로 안될 수 있다.
-
 - Synonym token filter를 적용하고, Anlayzing이 의도한대로 작동하는지 확인해야 한다.
-
 - file에서 Synonym 추가 가능.
-
 - 새로운 synonym이 추가 되면, 검색이 제대로 되지 않는 경우가 있다.
 
 ex) 
