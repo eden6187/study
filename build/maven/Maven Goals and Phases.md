@@ -23,7 +23,7 @@ Goal들의 모임이다.
 Phase에 Goal을 Binding하기 위해 필요하다.
 Maven에서 제공하고 있는 모든 기능은 Plugin을 기반으로 동작한다.
 
-## Lifecycle / Phase / Goals 사이의 관계를 나타낸 그림
+## Lifecycle / Phase / Goals 사이의 관계
 
 ![picture 1](images/02f29cb2211e6e313560850e3f0e1aefe144ba4506a95f335ecaf6f23d5438ba.png)  
 
@@ -31,3 +31,4 @@ Maven에서 제공하고 있는 모든 기능은 Plugin을 기반으로 동작�
 # Reference
 - https://m.blog.naver.com/PostView.naver?isHttpsRedirect=true&blogId=remagine&logNo=220726121992
 - https://www.baeldung.com/maven-goals-phases
+- https://medium.com/@yetanothersoftwareengineer/maven-lifecycle-phases-plugins-and-goals-25d8e33fa22
